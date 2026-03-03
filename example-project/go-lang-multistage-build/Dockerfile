@@ -7,7 +7,7 @@ RUN go mod download
 COPY go-task-api.go/ /app/
 RUN go build -o go-task-api go-task-api.go
 # ---------- Stage 2: Run ----------
-FROM ubuntu:22.04
+FROM scratch
 WORKDIR /app
 COPY --from=builder /app/go-task-api /app
 EXPOSE 8080
