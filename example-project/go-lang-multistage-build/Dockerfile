@@ -1,14 +1,25 @@
-# ---------- Stage 1: Build ----------
-FROM ubuntu:22.04 AS builder
-RUN apt-get update&& apt-get install -y golang-go git build-essential && rm -rf /var/lib/apt/lists/*
+# ---------- Stage 1 ----------
+FROM golang:1.22 AS builder
+
 WORKDIR /app
-COPY go.mod go.sum ./ 
+
+COPY go.mod go.sum ./
 RUN go mod download
-COPY go-task-api.go/ /app/
-RUN go build -o go-task-api go-task-api.go
-# ---------- Stage 2: Run ----------
-FROM scratch
+
+COPY . .
+
+RUN CGO_ENABLED=0 go build -o go-task-api
+
+# ---------- Stage 2 ----------
+FROM ubuntu:22.04
+
 WORKDIR /app
-COPY --from=builder /app/go-task-api /app
+
+RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /app/go-task-api /app/go-task-api
+
+RUN chmod +x /app/go-task-api
+
 EXPOSE 8080
-ENTRYPOINT ["./go-task-api"]
+ENTRYPOINT ["/app/go-task-api"]
