@@ -11,4 +11,4 @@ FROM scratch
 WORKDIR /app
 COPY --from=builder /app/go-task-api /app
 EXPOSE 8080
-ENTRYPOINT ["/app"]
+ENTRYPOINT ["./go-task-api"]
