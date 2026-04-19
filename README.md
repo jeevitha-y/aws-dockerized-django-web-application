@@ -44,8 +44,8 @@ docker run hello-world
 ```
 **5. Clone Repository**
 ```bash
-git clone https://github.com/jeevitha-y/docker-container-creation
-cd docker-container-creation/example-project/python-web-app
+git clone https://github.com/jeevitha-y/aws-dockerized-django-web-application
+cd aws-dockerized-django-web-application/apps/django-app
 ```
 **6. Authenticate with Docker Hub [Create an account with https://hub.docker.com/]**
 ```bash
